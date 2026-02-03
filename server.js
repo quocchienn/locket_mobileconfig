@@ -137,9 +137,20 @@ app.get('/install', (req, res) => {
   res.send(html);
 });
 
-// Mobileconfig profile
+// Mobileconfig profile - FIXED VERSION
 app.get('/install.mobileconfig', (req, res) => {
-  const uuid = () => crypto.randomUUID();
+  // Tạo UUID hợp lệ
+  const uuid = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    }).toUpperCase();
+  };
+  
+  const profileUUID = uuid();
+  const proxyUUID = uuid();
+  
   const mobileconfig = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -150,35 +161,47 @@ app.get('/install.mobileconfig', (req, res) => {
             <key>PayloadType</key>
             <string>com.apple.proxy.http.global</string>
             <key>PayloadIdentifier</key>
-            <string>com.locket.proxy.${uuid()}</string>
+            <string>com.apple.proxy.${proxyUUID}</string>
             <key>PayloadUUID</key>
-            <string>${uuid()}</string>
+            <string>${proxyUUID}</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>HTTP Proxy</string>
+            <key>PayloadDescription</key>
+            <string>Proxy settings for Locket</string>
             <key>ProxyType</key>
             <string>Auto</string>
             <key>ProxyAutoConfigURLString</key>
-            <string>https://${CONFIG.HOSTNAME}/proxy.pac</string>
+            <string>https://locket-mobileconfig.onrender.com/proxy.pac</string>
+            <key>PayloadOrganization</key>
+            <string>Apple Inc.</string>
         </dict>
     </array>
     <key>PayloadDisplayName</key>
     <string>Locket Pro Unlock</string>
     <key>PayloadIdentifier</key>
-    <string>com.locket.profile</string>
+    <string>com.apple.configuration.${profileUUID}</string>
     <key>PayloadRemovalDisallowed</key>
     <false/>
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadUUID</key>
-    <string>${uuid()}</string>
+    <string>${profileUUID}</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
+    <key>PayloadOrganization</key>
+    <string>Apple Inc.</string>
 </dict>
 </plist>`;
   
-  res.header('Content-Type', 'application/x-apple-aspen-config');
-  res.header('Content-Disposition', 'attachment; filename="Locket-Unlock.mobileconfig"');
+  // Set proper headers
+  res.setHeader('Content-Type', 'application/x-apple-aspen-config; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="Locket-Pro-Unlock.mobileconfig"');
+  
+  // Important: Send with proper encoding
   res.send(mobileconfig);
+  console.log(`📱 Generated mobileconfig with UUID: ${profileUUID}`);
 });
 
 // Proxy all other traffic
