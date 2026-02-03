@@ -154,385 +154,437 @@ app.get('/proxy.pac', (req, res) => {
   console.log('📄 Served PAC file');
 });
 
-// 3. Install page - Manual setup instructions (NO MOBILECONFIG)
 app.get('/install', (req, res) => {
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Locket Pro Unlock Setup</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: white;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            color: #333;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        h1 {
-            color: #764ba2;
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-        }
-        .step {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 25px;
-            margin: 25px 0;
-            border-radius: 12px;
-            position: relative;
-        }
-        .step-number {
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            background: #667eea;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        .screenshot {
-            background: #e9ecef;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
-            color: #666;
-            font-style: italic;
-        }
-        .code-block {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-        .warning {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        .success {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 18px 35px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.3em;
-            margin: 20px 10px;
-            text-align: center;
-            transition: transform 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .btn-secondary {
-            background: #6c757d;
-        }
-        .btn-success {
-            background: #28a745;
-        }
-        .btn-container {
-            text-align: center;
-            margin: 40px 0;
-        }
-        .copy-btn {
-            background: #38a169;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 1em;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .copy-btn:hover {
-            background: #2f855a;
-        }
-        .url-display {
-            background: #f8f9fa;
-            border: 2px dashed #667eea;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-size: 1.1em;
-            word-break: break-all;
-        }
-        @media (max-width: 768px) {
-            .container {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Locket Pro Unlock Setup</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                color: white;
                 padding: 20px;
             }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                padding: 40px;
+                color: #333;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            }
             h1 {
-                font-size: 2em;
+                color: #764ba2;
+                text-align: center;
+                font-size: 2.5em;
+                margin-bottom: 30px;
+            }
+            .step {
+                background: #f8f9fa;
+                border-left: 4px solid #667eea;
+                padding: 25px;
+                margin: 25px 0;
+                border-radius: 12px;
+                position: relative;
+            }
+            .step-number {
+                position: absolute;
+                top: -15px;
+                left: -15px;
+                background: #667eea;
+                color: white;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+            .screenshot {
+                background: #e9ecef;
+                padding: 15px;
+                border-radius: 10px;
+                margin: 15px 0;
+                text-align: center;
+                color: #666;
+                font-style: italic;
+                border: 2px dashed #adb5bd;
+            }
+            .code-block {
+                background: #2d3748;
+                color: #e2e8f0;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 15px 0;
+                font-family: 'Courier New', monospace;
+                font-size: 1.1em;
+                word-break: break-all;
+                border: 2px solid #4a5568;
+            }
+            .warning {
+                background: #fff3cd;
+                border: 2px solid #ffeaa7;
+                color: #856404;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 20px 0;
             }
             .btn {
-                display: block;
-                margin: 10px auto;
-                width: 90%;
+                display: inline-block;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 18px 35px;
+                text-decoration: none;
+                border-radius: 50px;
+                font-weight: bold;
+                font-size: 1.3em;
+                margin: 20px 10px;
+                text-align: center;
+                transition: all 0.3s;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                max-width: 400px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🎁 Locket Pro Unlock Setup</h1>
-        
-        <div class="success">
-            <strong>✅ No Profile Required!</strong> 
-            iOS restrictions prevent automatic proxy profiles on personal devices.
-            Follow these manual steps instead:
-        </div>
-        
-        <div class="step">
-            <div class="step-number">1</div>
-            <h3>Open Wi-Fi Settings</h3>
-            <p>Go to <strong>Settings → Wi-Fi</strong> on your iPhone</p>
-            <div class="screenshot">
-                📱 Make sure you're connected to Wi-Fi
+            .btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+            .btn-copy {
+                background: #38a169;
+                color: white;
+                border: none;
+                padding: 15px 25px;
+                border-radius: 50px;
+                font-weight: bold;
+                font-size: 1.2em;
+                cursor: pointer;
+                margin: 15px 0;
+                width: 100%;
+                max-width: 400px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+            .btn-copy:hover {
+                background: #2f855a;
+                transform: translateY(-2px);
+            }
+            .btn-container {
+                text-align: center;
+                margin: 30px 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .qr-code {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 20px auto;
+                width: 200px;
+                height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 3px solid #667eea;
+            }
+            .qr-code img {
+                width: 100%;
+                height: 100%;
+            }
+            @media (max-width: 768px) {
+                .container {
+                    padding: 20px;
+                }
+                h1 {
+                    font-size: 2em;
+                }
+                .btn, .btn-copy {
+                    width: 100%;
+                }
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1><i class="fas fa-crown"></i> Locket Pro Unlock Setup</h1>
+            
+            <div class="warning">
+                <h3><i class="fas fa-exclamation-triangle"></i> IMPORTANT</h3>
+                <p>iOS doesn't allow direct links to Settings. Please follow these steps MANUALLY:</p>
             </div>
-            <div class="btn-container">
-                <button class="btn" onclick="window.location.href='App-Prefs:root=WIFI'">
-                    🔗 Open Wi-Fi Settings Now
-                </button>
+            
+            <!-- STEP 1 -->
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3><i class="fas fa-wifi"></i> Open Wi-Fi Settings MANUALLY</h3>
+                <p>On your iPhone, go to:</p>
+                <div class="screenshot">
+                    <strong>Settings App</strong> → <strong>Wi-Fi</strong>
+                </div>
+                <p>Make sure you're connected to a Wi-Fi network</p>
             </div>
-        </div>
-        
-        <div class="step">
-            <div class="step-number">2</div>
-            <h3>Configure Proxy Settings</h3>
-            <p>Tap the <strong>ⓘ</strong> (info) icon next to your connected network</p>
-            <p>Scroll down to <strong>"Configure Proxy"</strong> section</p>
-            <div class="screenshot">
-                ⚙️ Tap "Configure Proxy" (near the bottom)
+            
+            <!-- STEP 2 -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3><i class="fas fa-cog"></i> Configure Proxy</h3>
+                <p>Tap the <strong>ⓘ (blue info icon)</strong> next to your connected network</p>
+                <div class="screenshot">
+                    Scroll down to <strong>"Configure Proxy"</strong> section
+                </div>
+                <p>Tap <strong>"Configure Proxy"</strong> (near the bottom)</p>
             </div>
-        </div>
-        
-        <div class="step">
-            <div class="step-number">3</div>
-            <h3>Select Auto Configuration</h3>
-            <p>Tap <strong>"Auto"</strong> (not Manual or Off)</p>
-            <div class="screenshot">
-                🔄 Choose "Auto" configuration
+            
+            <!-- STEP 3 -->
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3><i class="fas fa-robot"></i> Select Auto Configuration</h3>
+                <p>Tap <strong>"Auto"</strong> (NOT "Manual" or "Off")</p>
+                <div class="screenshot">
+                    Choose <strong>"Auto"</strong> configuration
+                </div>
             </div>
-        </div>
-        
-        <div class="step">
-            <div class="step-number">4</div>
-            <h3>Enter PAC URL</h3>
-            <p>Copy this exact URL and paste into the "URL" field:</p>
-            <div class="url-display" id="pacUrl">
-                https://locket-mobileconfig.onrender.com/proxy.pac
+            
+            <!-- STEP 4 - PAC URL với COPY thực sự hoạt động -->
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3><i class="fas fa-link"></i> Enter PAC URL</h3>
+                <p>Copy this EXACT URL:</p>
+                
+                <div class="code-block" id="pacUrl">
+                    https://locket-mobileconfig.onrender.com/proxy.pac
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn-copy" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i> TAP TO COPY PAC URL
+                    </button>
+                    <p id="copyStatus" style="color: #38a169; font-weight: bold; margin-top: 10px;"></p>
+                </div>
+                
+                <div class="screenshot">
+                    Paste the copied URL into the <strong>"URL"</strong> field
+                </div>
+                
+                <!-- QR Code cho dễ nhập -->
+                <div class="qr-code">
+                    <div id="qrcode"></div>
+                </div>
+                <p style="text-align: center; color: #666;">
+                    <i class="fas fa-qrcode"></i> Scan QR code with another device to copy URL
+                </p>
             </div>
-            <button class="copy-btn" onclick="copyPACUrl()">
-                📋 Copy PAC URL
-            </button>
-            <div class="screenshot">
-                🌐 Paste URL exactly as shown above
+            
+            <!-- STEP 5 -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3><i class="fas fa-save"></i> Save Configuration</h3>
+                <p>Tap <strong>"Save"</strong> in the top right corner</p>
+                <div class="screenshot">
+                    Save the proxy settings
+                </div>
             </div>
-        </div>
-        
-        <div class="step">
-            <div class="step-number">5</div>
-            <h3>Save Configuration</h3>
-            <p>Tap <strong>"Save"</strong> in the top right corner</p>
-            <div class="screenshot">
-                💾 Save the proxy settings
-            </div>
-        </div>
-        
-        <div class="step">
-            <div class="step-number">6</div>
-            <h3>Test Locket App</h3>
-            <p>Open <strong>Locket app</strong> and check:</p>
-            <div class="success">
-                <strong>Expected results:</strong>
-                <ul style="margin-top: 10px; margin-left: 20px;">
+            
+            <!-- STEP 6 -->
+            <div class="step">
+                <div class="step-number">6</div>
+                <h3><i class="fas fa-check-circle"></i> Test Locket App</h3>
+                <p>Open <strong>Locket app</strong> and check:</p>
+                <ul style="margin: 15px 0 15px 20px;">
                     <li>✅ All Pro features unlocked</li>
                     <li>✅ No advertisements</li>
                     <li>✅ Gold/Premium badge visible</li>
-                    <li>✅ Unlimited usage</li>
                 </ul>
+                <div class="screenshot">
+                    If not working, try restarting Locket app
+                </div>
             </div>
+            
+            <!-- Test Buttons -->
             <div class="btn-container">
-                <button class="btn btn-success" onclick="window.location.href='https://apps.apple.com/us/app/locket-widget/id1600528955'">
-                    📲 Open Locket App
+                <button class="btn" onclick="testPAC()">
+                    <i class="fas fa-vial"></i> Test PAC File
+                </button>
+                <button class="btn" onclick="testServer()">
+                    <i class="fas fa-heart"></i> Check Server Status
+                </button>
+                <button class="btn" onclick="showTroubleshooting()">
+                    <i class="fas fa-tools"></i> Troubleshooting
                 </button>
             </div>
+            
+            <!-- Status Display -->
+            <div style="text-align: center; margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 10px;">
+                <h4><i class="fas fa-server"></i> Server Status</h4>
+                <p>Server: <strong>locket-mobileconfig.onrender.com</strong></p>
+                <p>Status: <span id="serverStatus">Checking...</span></p>
+                <p id="serverDetails" style="font-size: 0.9em; color: #666;"></p>
+            </div>
+            
+            <!-- Troubleshooting (hidden by default) -->
+            <div id="troubleshooting" style="display: none; margin-top: 30px;">
+                <div class="warning">
+                    <h3><i class="fas fa-tools"></i> Troubleshooting Guide</h3>
+                    <p><strong>If Locket doesn't unlock:</strong></p>
+                    <ol style="margin: 10px 0 10px 20px;">
+                        <li>Restart Locket app completely (swipe up to close)</li>
+                        <li>Turn Airplane Mode ON, wait 5 seconds, turn OFF</li>
+                        <li>Switch between WiFi and Cellular data</li>
+                        <li>Clear Locket app cache: 
+                            <br>Settings → General → iPhone Storage → Locket → Offload App
+                        </li>
+                        <li>Make sure proxy is ON: Settings → Wi-Fi → ⓘ → Configure Proxy should show "Auto"</li>
+                    </ol>
+                </div>
+            </div>
         </div>
+
+        <!-- QR Code Library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
         
-        <div class="warning">
-            <h3>🔧 Troubleshooting Guide:</h3>
-            <p>If Locket doesn't unlock:</p>
-            <ol style="margin-left: 20px; margin-top: 10px;">
-                <li><strong>Restart Locket app</strong> completely (swipe up from app switcher)</li>
-                <li><strong>Toggle Airplane Mode</strong>: Settings → Airplane Mode (ON, wait 5s, OFF)</li>
-                <li><strong>Switch networks</strong>: Try Cellular data instead of Wi-Fi</li>
-                <li><strong>Clear app cache</strong>: Settings → General → iPhone Storage → Locket → Offload App</li>
-                <li><strong>Check server status</strong> below</li>
-            </ol>
-        </div>
-        
-        <div class="btn-container">
-            <button class="btn btn-secondary" onclick="window.location.href='https://locket-mobileconfig.onrender.com/proxy.pac'">
-                📄 View PAC File
-            </button>
-            <button class="btn btn-secondary" onclick="window.location.href='https://locket-mobileconfig.onrender.com/health'">
-                ❤️ Check Server Status
-            </button>
-            <button class="btn btn-secondary" onclick="testProxy()">
-                🧪 Test Proxy Connection
-            </button>
-        </div>
-        
-        <div style="text-align: center; margin-top: 40px; color: #666; font-size: 0.9em;">
-            <p>Server: <strong>locket-mobileconfig.onrender.com</strong></p>
-            <p>Status: <span id="status">Checking...</span></p>
-            <p>Last Updated: <span id="timestamp">${new Date().toLocaleString()}</span></p>
-        </div>
-    </div>
-    
-    <script>
-        // Check server status on load
-        async function checkServerStatus() {
-            try {
-                const response = await fetch('https://locket-mobileconfig.onrender.com/health');
-                const data = await response.json();
+        <script>
+            // Generate QR Code
+            document.addEventListener('DOMContentLoaded', function() {
+                const pacUrl = document.getElementById('pacUrl').innerText;
+                new QRCode(document.getElementById("qrcode"), {
+                    text: pacUrl,
+                    width: 160,
+                    height: 160,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            });
+            
+            // Copy to Clipboard FUNCTION - FIXED
+            function copyToClipboard() {
+                const text = document.getElementById('pacUrl').innerText;
+                const status = document.getElementById('copyStatus');
                 
-                document.getElementById('status').innerHTML = 
-                    '<span style="color: #28a745;">✅ Online</span>';
-                document.getElementById('timestamp').textContent = 
-                    new Date(data.timestamp).toLocaleString();
-                
-                // Update status indicator
-                document.title = '✅ Locket Setup - Server Online';
-                
-            } catch (error) {
-                document.getElementById('status').innerHTML = 
-                    '<span style="color: #dc3545;">❌ Offline - Server may be sleeping</span>';
-                document.getElementById('timestamp').textContent = 'Unknown';
-                
-                // Show wake-up instructions
-                const statusElement = document.getElementById('status');
-                statusElement.innerHTML += '<br><small>Click "Check Server Status" to wake up server</small>';
+                // Method 1: Modern clipboard API
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text)
+                        .then(() => {
+                            status.innerHTML = '✅ Copied to clipboard!';
+                            status.style.color = '#38a169';
+                            
+                            // Show notification
+                            showNotification('PAC URL copied!');
+                        })
+                        .catch(err => {
+                            // Fallback to method 2
+                            copyFallback(text, status);
+                        });
+                } else {
+                    // Fallback for older browsers
+                    copyFallback(text, status);
+                }
             }
-        }
-        
-        // Copy PAC URL to clipboard
-        function copyPACUrl() {
-            const text = document.getElementById('pacUrl').innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ PAC URL copied to clipboard!\n\nNow go to:\nSettings → Wi-Fi → ⓘ → Configure Proxy → Auto\nPaste the URL and tap Save.');
-            }).catch(err => {
-                // Fallback for older browsers
+            
+            // Fallback copy method
+            function copyFallback(text, status) {
                 const textArea = document.createElement('textarea');
                 textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
                 document.body.appendChild(textArea);
+                textArea.focus();
                 textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('✅ URL copied! Paste it in Wi-Fi proxy settings.');
-            });
-        }
-        
-        // Test proxy connection
-        async function testProxy() {
-            try {
-                const response = await fetch('https://locket-mobileconfig.onrender.com/health');
-                const data = await response.json();
                 
-                if (data.status === 'healthy') {
-                    alert('✅ Proxy server is working perfectly!\n\nServer: ' + data.server + 
-                          '\\nTarget: ' + data.proxy_target + 
-                          '\\nVersion: ' + data.version);
-                } else {
-                    alert('⚠️ Server responded but status is not healthy');
+                try {
+                    document.execCommand('copy');
+                    status.innerHTML = '✅ Copied to clipboard!';
+                    status.style.color = '#38a169';
+                    showNotification('PAC URL copied!');
+                } catch (err) {
+                    status.innerHTML = '❌ Failed to copy. Please select and copy manually.';
+                    status.style.color = '#e53e3e';
+                    textArea.select();
                 }
-            } catch (error) {
-                alert('❌ Cannot connect to proxy server. Possible issues:\\n\\n' +
-                      '1. Server is sleeping (free tier limitation)\\n' +
-                      '2. Network connection problem\\n' +
-                      '3. Server may need to restart\\n\\n' +
-                      'Try clicking "Check Server Status" to wake up the server.');
-            }
-        }
-        
-        // Open Wi-Fi settings (iOS only)
-        function openWifiSettings() {
-            // iOS URL scheme for Wi-Fi settings
-            window.location.href = 'App-Prefs:root=WIFI';
-            
-            // Fallback instructions
-            setTimeout(() => {
-                alert('If Wi-Fi settings didn\'t open automatically:\\n\\n' +
-                      '1. Manually go to Settings → Wi-Fi\\n' +
-                      '2. Tap ⓘ next to your network\\n' +
-                      '3. Scroll to "Configure Proxy"');
-            }, 1000);
-        }
-        
-        // Initialize on page load
-        window.addEventListener('load', () => {
-            checkServerStatus();
-            
-            // Auto-scroll for mobile
-            if (window.innerWidth < 768) {
-                document.querySelector('.step:nth-child(2)').scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
+                
+                document.body.removeChild(textArea);
             }
             
-            // Update title with status
-            document.title = 'Locket Pro Unlock Setup';
-        });
-        
-        // Keep server awake with periodic pings
-        setInterval(() => {
-            fetch('https://locket-mobileconfig.onrender.com/health')
-                .catch(() => {}); // Silent ping
-        }, 300000); // Ping every 5 minutes
-    </script>
-</body>
-</html>`;
+            // Show notification
+            function showNotification(message) {
+                if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
+                    // iOS notification
+                    alert(message);
+                }
+            }
+            
+            // Test PAC file
+            function testPAC() {
+                window.open('https://locket-mobileconfig.onrender.com/proxy.pac', '_blank');
+            }
+            
+            // Test server status
+            function testServer() {
+                const statusEl = document.getElementById('serverStatus');
+                const detailsEl = document.getElementById('serverDetails');
+                
+                statusEl.innerHTML = 'Checking...';
+                statusEl.style.color = '#666';
+                
+                fetch('https://locket-mobileconfig.onrender.com/health')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Server error');
+                        return response.json();
+                    })
+                    .then(data => {
+                        statusEl.innerHTML = '✅ Online & Healthy';
+                        statusEl.style.color = '#38a169';
+                        detailsEl.innerHTML = 
+                            `Version: ${data.version || '2.0.0'} | Uptime: ${Math.floor(data.uptime || 0)}s`;
+                    })
+                    .catch(error => {
+                        statusEl.innerHTML = '❌ Server Error';
+                        statusEl.style.color = '#e53e3e';
+                        detailsEl.innerHTML = 'Server may be sleeping. Try accessing again.';
+                    });
+            }
+            
+            // Show troubleshooting
+            function showTroubleshooting() {
+                const troubleshooting = document.getElementById('troubleshooting');
+                troubleshooting.style.display = troubleshooting.style.display === 'none' ? 'block' : 'none';
+            }
+            
+            // Auto-check server status on load
+            window.onload = function() {
+                testServer();
+                
+                // Auto-scroll to top on mobile
+                if (window.innerWidth < 768) {
+                    window.scrollTo(0, 0);
+                }
+            };
+            
+            // Handle iOS back button
+            window.onpageshow = function(event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            };
+        </script>
+    </body>
+    </html>
+  `);
+});
   
   res.send(html);
   console.log('📱 Served install page');
