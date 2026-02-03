@@ -1,6 +1,6 @@
 {
   "name": "locket-unlock-proxy",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
